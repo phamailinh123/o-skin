@@ -9,10 +9,10 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Đổi sang Montserrat cho nội dung và Playfair Display cho tiêu đề -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -29,7 +29,7 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
+                        sans: ['DM Sans', 'sans-serif'],
                         serif: ['Playfair Display', 'serif']
                     }
                 }
@@ -38,60 +38,37 @@
     </script>
     
     <style>
-        /* Hiệu ứng chuyển trang mượt mà */
-        .page-view {
-            display: none;
-            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .page-view.active {
-            display: block;
-        }
+        /* Chuyển trang */
+        .page-view { display: none; animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .page-view.active { display: block; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Header Navigation */
-        #navbar {
-            transition: all 0.3s ease;
-        }
-        #navbar.scrolled {
-            background-color: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            color: #1a1a1a;
-        }
+        /* Header */
+        #navbar { transition: all 0.3s ease; }
+        #navbar.scrolled { background-color: rgba(255, 255, 255, 0.98); box-shadow: 0 2px 10px rgba(0,0,0,0.05); color: #1a1a1a; }
         #navbar.scrolled .nav-link { color: #1a1a1a; }
         
-        /* Accordion FAQ */
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-        }
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
+        /* FAQ */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .faq-item.active .faq-answer { max-height: 300px; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
 
-        /* Custom File Input */
+        /* Cart Drawer */
+        #cart-drawer { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .cart-open { transform: translateX(0) !important; }
+        .cart-items-scroll::-webkit-scrollbar { width: 4px; }
+        .cart-items-scroll::-webkit-scrollbar-thumb { background-color: #d37b40; border-radius: 4px; }
+
+        /* Input File */
         input[type="file"]::file-selector-button {
-            border: 1px solid #1a1a1a;
-            padding: 0.5rem 1rem;
-            border-radius: 0;
-            background-color: transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            border: 1px solid #1a1a1a; padding: 0.5rem 1rem; border-radius: 0;
+            background-color: transparent; cursor: pointer; transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif; font-size: 0.75rem; text-transform: uppercase;
         }
-        input[type="file"]::file-selector-button:hover {
-            background-color: #1a1a1a;
-            color: white;
-        }
+        input[type="file"]::file-selector-button:hover { background-color: #1a1a1a; color: white; }
     </style>
 </head>
 <body class="bg-oskin-light text-oskin-dark font-sans antialiased min-h-screen flex flex-col">
@@ -102,47 +79,66 @@
             <div class="flex-shrink-0 cursor-pointer" onclick="navigateTo('home')">
                 <span class="font-serif text-3xl font-bold tracking-widest uppercase">O-Skin</span>
             </div>
-            <!-- Menu PC -->
             <nav class="hidden lg:flex space-x-8 items-center">
-                <button onclick="navigateTo('about')" class="nav-link text-sm uppercase tracking-wider font-medium hover:text-oskin-orange transition">About Us</button>
-                <button onclick="navigateTo('sustainability')" class="nav-link text-sm uppercase tracking-wider font-medium hover:text-oskin-orange transition">Sustainability</button>
-                <button onclick="navigateTo('products')" class="nav-link text-sm uppercase tracking-wider font-medium hover:text-oskin-orange transition">Products</button>
-                <button onclick="navigateTo('news')" class="nav-link text-sm uppercase tracking-wider font-medium hover:text-oskin-orange transition">News</button>
-                <button onclick="navigateTo('faq')" class="nav-link text-sm uppercase tracking-wider font-medium hover:text-oskin-orange transition">FAQ</button>
-                <button onclick="navigateTo('join-team')" class="nav-link text-sm uppercase tracking-wider font-medium hover:text-oskin-orange transition">Join Our Team</button>
-                <button onclick="navigateTo('contact')" class="nav-link text-sm uppercase tracking-wider font-medium bg-oskin-orange text-white px-5 py-2 rounded hover:bg-opacity-90 transition">Contact</button>
+                <button onclick="navigateTo('about')" class="nav-link text-xs uppercase tracking-widest font-medium hover:text-oskin-orange transition">About Us</button>
+                <button onclick="navigateTo('sustainability')" class="nav-link text-xs uppercase tracking-widest font-medium hover:text-oskin-orange transition">Sustainability</button>
+                <button onclick="navigateTo('products')" class="nav-link text-xs uppercase tracking-widest font-medium hover:text-oskin-orange transition">Products</button>
+                <button onclick="navigateTo('news')" class="nav-link text-xs uppercase tracking-widest font-medium hover:text-oskin-orange transition">News</button>
+                <button onclick="navigateTo('faq')" class="nav-link text-xs uppercase tracking-widest font-medium hover:text-oskin-orange transition">FAQ</button>
+                <button onclick="navigateTo('join-team')" class="nav-link text-xs uppercase tracking-widest font-medium hover:text-oskin-orange transition">Join Our Team</button>
+                <button onclick="navigateTo('contact')" class="nav-link text-xs uppercase tracking-widest font-medium hover:text-oskin-orange transition">Contact</button>
+                
+                <!-- Nút Giỏ Hàng -->
+                <button onclick="toggleCart()" class="nav-link relative flex items-center hover:text-oskin-orange transition ml-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-oskin-orange text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+                </button>
             </nav>
         </div>
     </header>
 
-    <!-- CONTAINER CHỨA CÁC TRANG -->
+    <!-- CART DRAWER -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-[60] hidden opacity-0 transition-opacity duration-300" onclick="toggleCart()"></div>
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] transform translate-x-full shadow-2xl flex flex-col">
+        <div class="flex justify-between items-center p-6 border-b border-gray-100">
+            <h2 class="font-serif text-2xl font-bold uppercase tracking-widest">Giỏ Hàng</h2>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-oskin-dark transition text-2xl">&times;</button>
+        </div>
+        <div id="cart-items" class="flex-grow p-6 overflow-y-auto cart-items-scroll space-y-6">
+            <!-- Nội dung giỏ hàng -->
+        </div>
+        <div class="p-6 border-t border-gray-100 bg-gray-50">
+            <div class="flex justify-between mb-4">
+                <span class="font-medium uppercase tracking-widest text-sm">Tổng cộng</span>
+                <span id="cart-total" class="font-bold text-lg">0 VNĐ</span>
+            </div>
+            <button onclick="alert('Chức năng thanh toán đang được hoàn thiện!')" class="w-full bg-oskin-dark text-white uppercase tracking-widest text-sm font-bold py-4 hover:bg-oskin-orange transition">Thanh Toán</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
     <main class="flex-grow">
         
         <!-- =================== TRANG CHỦ =================== -->
         <section id="home" class="page-view active">
-            <!-- Hero Section -->
             <div class="relative h-screen flex items-center justify-center bg-oskin-green overflow-hidden">
                 <div class="absolute inset-0 z-0 bg-oskin-green">
-                    <!-- Ảnh Hero -->
-                    <img src="https://images.unsplash.com/photo-1611077544837-779cb2566144?q=80&w=2000&auto=format&fit=crop" alt="O-Skin Material Texture" class="w-full h-full object-cover opacity-30 mix-blend-overlay">
+                    <img src="https://images.unsplash.com/photo-1611077544837-779cb2566144?q=80&w=2000&auto=format&fit=crop" alt="O-Skin Material" class="w-full h-full object-cover opacity-30 mix-blend-overlay">
                 </div>
-                
                 <div class="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
-                    <p class="text-white text-sm md:text-base uppercase tracking-[0.2em] mb-6 font-medium">Innovative Biomaterials</p>
+                    <p class="text-white text-xs md:text-sm uppercase tracking-[0.3em] mb-6 font-medium">Innovative Biomaterials</p>
                     <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight mb-8 leading-tight">
                         Fashion Beyond <span class="italic text-oskin-orange">Waste</span>
                     </h1>
-                    <p class="text-gray-200 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">
+                    <p class="text-gray-200 text-base md:text-lg font-light mb-10 max-w-2xl mx-auto leading-relaxed">
                         Tiên phong tại Việt Nam ứng dụng da thuần chay sinh học từ vỏ cam. Tối giản, thẩm mỹ và có trách nhiệm.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <button onclick="navigateTo('products')" class="bg-oskin-orange text-white px-8 py-4 uppercase tracking-widest text-sm font-semibold hover:bg-white hover:text-oskin-dark transition duration-300">Bộ Sưu Tập</button>
-                        <button onclick="navigateTo('about')" class="border border-white text-white px-8 py-4 uppercase tracking-widest text-sm font-semibold hover:bg-white hover:text-oskin-dark transition duration-300">Câu Chuyện</button>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="navigateTo('products')" class="bg-oskin-orange text-white px-8 py-4 uppercase tracking-widest text-xs font-bold hover:bg-white hover:text-oskin-dark transition duration-300">Bộ Sưu Tập</button>
+                        <button onclick="navigateTo('about')" class="border border-white text-white px-8 py-4 uppercase tracking-widest text-xs font-bold hover:bg-white hover:text-oskin-dark transition duration-300">Câu Chuyện</button>
                     </div>
                 </div>
             </div>
-            
-            <!-- Featured Quick Section -->
             <div class="py-24 bg-white">
                 <div class="max-w-screen-2xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div>
@@ -153,7 +149,7 @@
                         <button onclick="navigateTo('sustainability')" class="text-oskin-orange font-semibold uppercase tracking-wider hover:text-oskin-dark transition border-b border-oskin-orange pb-1">Xem Báo Cáo Bền Vững</button>
                     </div>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop" alt="Nature and sustainability" class="w-full h-[500px] object-cover rounded shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop" alt="Nature" class="w-full h-[500px] object-cover rounded shadow-lg">
                     </div>
                 </div>
             </div>
@@ -161,17 +157,14 @@
 
         <!-- =================== ABOUT US =================== -->
         <section id="about" class="page-view">
-            <!-- Header Banner -->
             <div class="relative h-[50vh] flex items-center justify-center bg-oskin-green overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2000&auto=format&fit=crop" alt="Coffee and work" class="absolute inset-0 w-full h-full object-cover opacity-20">
                 <h1 class="relative z-10 text-white text-5xl md:text-6xl font-serif font-bold">About Us</h1>
             </div>
-
             <div class="py-24 max-w-screen-xl mx-auto px-6 md:px-12">
                 <div class="mb-20">
                     <h2 class="text-sm font-semibold uppercase tracking-widest text-oskin-orange mb-4">Câu chuyện thương hiệu</h2>
                     <h3 class="text-4xl md:text-5xl font-serif font-semibold mb-8 text-oskin-dark leading-tight">Sứ mệnh</h3>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div class="text-gray-700 text-base md:text-lg font-light space-y-6 leading-loose">
                             <p>Khách hàng ngày nay quan tâm đến môi trường, nhưng phần lớn phụ kiện thời trang trên thị trường lại làm từ da động vật hoặc nhựa PU/PVC khó phân hủy. Đó là lý do O-Skin ra đời.</p>
@@ -183,8 +176,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Đội ngũ -->
                 <div>
                     <h2 class="text-3xl font-serif font-semibold mb-10 text-center">Giá Trị Cốt Lõi</h2>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
@@ -194,7 +185,7 @@
                         </div>
                         <div class="p-8 bg-gray-50 rounded">
                             <h4 class="font-bold text-xl mb-4 text-oskin-green">Bền vững</h4>
-                            <p class="text-sm font-light text-gray-600 leading-relaxed">Cân bằng giữa yếu tố thời trang, tính ứng dụng và trách nhiệm bảo vệ môi trường.</p>
+                            <p class="text-sm font-light text-gray-600 leading-relaxed">Cân bằng giữa thời trang, tính ứng dụng và trách nhiệm môi trường.</p>
                         </div>
                         <div class="p-8 bg-gray-50 rounded">
                             <h4 class="font-bold text-xl mb-4 text-oskin-green">Minh bạch</h4>
@@ -211,116 +202,151 @@
 
         <!-- =================== SUSTAINABILITY =================== -->
         <section id="sustainability" class="page-view">
-            <!-- Header Banner -->
             <div class="relative h-[50vh] flex items-center justify-center bg-oskin-dark overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2000&auto=format&fit=crop" alt="Nature" class="absolute inset-0 w-full h-full object-cover opacity-30">
                 <h1 class="relative z-10 text-white text-5xl md:text-6xl font-serif font-bold">Sustainability</h1>
             </div>
-
             <div class="py-24 bg-white text-oskin-dark">
                 <div class="max-w-screen-xl mx-auto px-6 md:px-12 text-center">
-                    <h3 class="text-3xl md:text-5xl font-serif font-semibold mb-16 max-w-4xl mx-auto leading-tight">
-                        Tiêu chuẩn mới cho thời trang không rác thải
-                    </h3>
-                    
+                    <h3 class="text-3xl md:text-5xl font-serif font-semibold mb-16 max-w-4xl mx-auto leading-tight">Tiêu chuẩn mới cho thời trang không rác thải</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left mb-20">
                         <div class="p-8 border border-gray-200 hover:shadow-xl transition duration-300">
                             <div class="w-16 h-16 bg-oskin-orange/10 rounded-full flex items-center justify-center mb-6">
                                 <svg class="w-8 h-8 text-oskin-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                             </div>
                             <h4 class="text-2xl font-serif font-semibold mb-4">Kinh tế tuần hoàn</h4>
-                            <p class="text-gray-600 font-light leading-loose">Chúng tôi tận dụng hàng nghìn tấn vỏ cam phế phẩm làm nguyên liệu. Khách hàng cũng có thể gửi lại sản phẩm O-Skin đã qua sử dụng để chúng tôi tái chế đúng cách.</p>
+                            <p class="text-gray-600 font-light leading-loose">Tận dụng hàng nghìn tấn vỏ cam phế phẩm làm nguyên liệu. Khách hàng có thể gửi lại sản phẩm cũ để chúng tôi tái chế đúng cách.</p>
                         </div>
-
                         <div class="p-8 border border-gray-200 hover:shadow-xl transition duration-300">
                             <div class="w-16 h-16 bg-oskin-green/10 rounded-full flex items-center justify-center mb-6">
                                 <svg class="w-8 h-8 text-oskin-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                             </div>
                             <h4 class="text-2xl font-serif font-semibold mb-4">Hóa học xanh</h4>
-                            <p class="text-gray-600 font-light leading-loose">Là sản xuất loại bỏ hoàn toàn hóa chất độc hại. O-Skin không dùng kim loại nặng hay thuốc nhuộm hóa học. Thay vào đó, chúng tôi dùng Alginate, Glycerin và dầu dừa hữu cơ, đảm bảo an toàn tuyệt đối cho người dùng.</p>
+                            <p class="text-gray-600 font-light leading-loose">Loại bỏ hoàn toàn hóa chất độc hại, kim loại nặng hay thuốc nhuộm. Dùng Alginate, Glycerin và dầu dừa hữu cơ đảm bảo an toàn tuyệt đối.</p>
                         </div>
-
                         <div class="p-8 border border-gray-200 hover:shadow-xl transition duration-300">
                             <div class="w-16 h-16 bg-oskin-orange/10 rounded-full flex items-center justify-center mb-6">
                                 <svg class="w-8 h-8 text-oskin-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
                             </div>
-                            <h4 class="text-2xl font-serif font-semibold mb-4">Bao bì bảo vệ môi trường</h4>
-                            <p class="text-gray-600 font-light leading-loose">Hộp đựng được làm từ giấy tái chế FSC. Dây buộc từ cotton tự nhiên và thẻ cảm ơn in bằng mực sinh học phân hủy 100% trong môi trường đất.</p>
+                            <h4 class="text-2xl font-serif font-semibold mb-4">Bao bì bảo vệ</h4>
+                            <p class="text-gray-600 font-light leading-loose">Hộp đựng làm từ giấy tái chế FSC. Dây buộc từ cotton tự nhiên và thẻ cảm ơn in bằng mực sinh học phân hủy 100% trong môi trường đất.</p>
                         </div>
                     </div>
-
                     <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=2000&auto=format&fit=crop" alt="Eco Material" class="w-full h-[600px] object-cover rounded-sm mb-12">
                 </div>
             </div>
         </section>
 
-        
-<!-- =================== PRODUCTS =================== -->
-<section id="products" class="page-view">
-<div class="relative h-[40vh] flex items-center justify-center bg-oskin-green overflow-hidden">
-<h1 class="relative z-10 text-white text-5xl md:text-6xl font-serif font-bold">Products</h1>
-</div>
-<div class="py-24 bg-white">
-<div class="max-w-screen-2xl mx-auto px-6 md:px-12">
-<div class="text-center mb-12">
-<h2 class="font-serif text-4xl">O‑Skin Collections</h2>
-<p class="text-gray-600 mt-3">12 màu sắc thuộc hai bộ sưu tập Mini và Tote</p>
-</div>
-<div class="flex flex-wrap gap-3 justify-center mb-8">
-<button onclick="filterCollection('all')" class="border px-4 py-2">All</button>
-<button onclick="filterCollection('Mini')" class="border px-4 py-2">Mini</button>
-<button onclick="filterCollection('Tote')" class="border px-4 py-2">Tote</button>
-</div>
-<div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
-</div></div>
-<div id="productModal" class="hidden fixed inset-0 bg-black/60 z-50 p-6">
-<div class="bg-white max-w-4xl mx-auto p-6"><button onclick="closeModal()" class="float-right text-2xl">×</button><div id="modalContent"></div></div>
-</div>
-</section>
-<!-- =================== NEWS =================== -->
+        <!-- =================== PRODUCTS (SHOP) =================== -->
+        <section id="products" class="page-view pt-28 pb-24">
+            <div class="max-w-screen-2xl mx-auto px-6 md:px-12">
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl font-serif font-bold mb-4">The Collection</h1>
+                    <p class="text-gray-500 font-light text-lg">Tuyệt tác từ da sinh học vỏ cam. Khám phá các thiết kế bền vững.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-gray-200 pb-6 gap-6">
+                    <div class="flex space-x-6">
+                        <button onclick="filterCategory('All')" id="cat-All" class="text-sm uppercase tracking-widest font-bold border-b-2 border-oskin-dark pb-1 filter-cat">Tất Cả</button>
+                        <button onclick="filterCategory('Mini')" id="cat-Mini" class="text-sm uppercase tracking-widest font-light text-gray-400 hover:text-oskin-dark pb-1 filter-cat">Mini</button>
+                        <button onclick="filterCategory('Tote')" id="cat-Tote" class="text-sm uppercase tracking-widest font-light text-gray-400 hover:text-oskin-dark pb-1 filter-cat">Tote</button>
+                        <button onclick="filterCategory('Cross')" id="cat-Cross" class="text-sm uppercase tracking-widest font-light text-gray-400 hover:text-oskin-dark pb-1 filter-cat">Crossbody</button>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-xs uppercase tracking-widest text-gray-400 mr-2">Màu sắc:</span>
+                        <button onclick="filterColor('All')" class="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-[10px] font-bold">All</button>
+                        <button onclick="filterColor('Trắng')" class="w-6 h-6 rounded-full bg-[#f8f5f0] border border-gray-200 shadow-sm hover:scale-110 transition"></button>
+                        <button onclick="filterColor('Đen')" class="w-6 h-6 rounded-full bg-[#222] border border-gray-200 shadow-sm hover:scale-110 transition"></button>
+                        <button onclick="filterColor('Nâu')" class="w-6 h-6 rounded-full bg-[#8b5a2b] border border-gray-200 shadow-sm hover:scale-110 transition"></button>
+                        <button onclick="filterColor('Xanh')" class="w-6 h-6 rounded-full bg-[#4a5d23] border border-gray-200 shadow-sm hover:scale-110 transition"></button>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 gap-y-16">
+                    <!-- Javascript will render products here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- =================== PRODUCT DETAIL =================== -->
+        <section id="product-detail" class="page-view pt-28 pb-24 bg-white">
+            <div class="max-w-screen-xl mx-auto px-6 md:px-12">
+                <div class="text-xs uppercase tracking-widest text-gray-400 mb-8 flex items-center gap-2">
+                    <button onclick="navigateTo('products')" class="hover:text-oskin-dark transition">Cửa Hàng</button>
+                    <span>/</span>
+                    <span id="pd-breadcrumb-name" class="text-oskin-dark font-bold">Tên SP</span>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div class="flex flex-col-reverse md:flex-row gap-4">
+                        <div id="pd-thumbnails" class="flex md:flex-col gap-4 overflow-x-auto md:w-24 flex-shrink-0 hide-scrollbar"></div>
+                        <div class="flex-grow bg-gray-50 h-[500px] md:h-[700px] w-full">
+                            <img id="pd-main-img" src="" class="w-full h-full object-cover object-center">
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <p id="pd-category" class="text-xs font-bold uppercase tracking-widest text-oskin-orange mb-3">Danh Mục</p>
+                        <h1 id="pd-name" class="text-4xl md:text-5xl font-serif font-bold mb-4">Tên Sản Phẩm</h1>
+                        <p id="pd-price" class="text-2xl font-light mb-8">0 VNĐ</p>
+                        <p class="text-sm font-bold uppercase tracking-widest mb-3">Màu sắc: <span id="pd-color-name" class="font-light text-gray-500 normal-case">Màu</span></p>
+                        <div class="flex items-center space-x-4 mb-10 pb-10 border-b border-gray-100">
+                            <div id="pd-color-circle" class="w-8 h-8 rounded-full border border-gray-300 shadow-inner"></div>
+                        </div>
+                        <p id="pd-desc" class="text-gray-600 font-light leading-loose mb-10"></p>
+                        <button id="pd-add-btn" class="w-full bg-oskin-dark text-white uppercase tracking-widest text-sm font-bold py-5 hover:bg-oskin-orange transition duration-300 flex justify-center items-center gap-3">
+                            Thêm Vào Giỏ Hàng
+                        </button>
+                        <div class="mt-10 space-y-4 border-t border-gray-100 pt-8">
+                            <div class="cursor-pointer" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                                <h4 class="text-sm font-bold uppercase tracking-widest flex justify-between">Chất liệu & Thành phần <span>+</span></h4>
+                            </div>
+                            <p class="hidden text-sm text-gray-500 font-light leading-relaxed">Bề mặt 100% da sinh học (Polymer vỏ cam, Sodium Alginate, Dầu dừa, Canxi Clorua). Lót trong vải cotton hữu cơ. Phụ kiện hợp kim chống gỉ không chứa chì.</p>
+                            <div class="cursor-pointer border-t border-gray-100 pt-4" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                                <h4 class="text-sm font-bold uppercase tracking-widest flex justify-between">Bảo quản <span>+</span></h4>
+                            </div>
+                            <p class="hidden text-sm text-gray-500 font-light leading-relaxed">Dùng khăn ẩm, mềm để lau sạch vết bẩn. Tránh tiếp xúc trực tiếp với hóa chất, nước hoa. Không sấy ở nhiệt độ cao.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================== NEWS =================== -->
         <section id="news" class="page-view">
-            <!-- Header Banner -->
             <div class="relative h-[40vh] flex items-center justify-center bg-gray-900 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=2000&auto=format&fit=crop" alt="Journal" class="absolute inset-0 w-full h-full object-cover opacity-40">
                 <h1 class="relative z-10 text-white text-5xl md:text-6xl font-serif font-bold">News</h1>
             </div>
-
             <div class="py-24 bg-white">
                 <div class="max-w-screen-xl mx-auto px-6 md:px-12">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        <!-- Tin tức 1 -->
                         <article class="group cursor-pointer">
                             <div class="overflow-hidden mb-6 rounded">
-                                <img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=800&auto=format&fit=crop" alt="Eco Fashion" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
+                                <img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=800&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
                             </div>
                             <p class="text-xs font-semibold text-oskin-orange uppercase tracking-widest mb-3">Kiến thức | 21/06/2026</p>
                             <h3 class="text-2xl font-serif font-semibold mb-3 group-hover:text-oskin-green transition leading-snug">Tại sao Gen Z sẵn sàng chi trả cho tương lai xanh?</h3>
-                            <p class="text-gray-600 font-light mb-6 line-clamp-3 leading-relaxed">Khảo sát cho thấy 96% người tiêu dùng trẻ lo ngại về biến đổi khí hậu. Họ sẵn sàng trả thêm tiền cho các sản phẩm thực sự thân thiện với môi trường, miễn là thương hiệu chứng minh được sự minh bạch rõ ràng.</p>
+                            <p class="text-gray-600 font-light mb-6 line-clamp-3 leading-relaxed">Khảo sát cho thấy 96% người tiêu dùng trẻ lo ngại về biến đổi khí hậu. Họ sẵn sàng trả thêm tiền cho các sản phẩm thực sự thân thiện với môi trường.</p>
                             <span class="text-xs font-semibold border-b border-black pb-1 uppercase tracking-widest hover:text-oskin-orange hover:border-oskin-orange transition">Đọc tiếp</span>
                         </article>
-
-                        <!-- Tin tức 2 -->
                         <article class="group cursor-pointer">
                             <div class="overflow-hidden mb-6 rounded">
-                                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop" alt="Innovation" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
+                                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
                             </div>
                             <p class="text-xs font-semibold text-oskin-orange uppercase tracking-widest mb-3">Công Nghệ | 15/06/2026</p>
                             <h3 class="text-2xl font-serif font-semibold mb-3 group-hover:text-oskin-green transition leading-snug">Ứng dụng in 3D vào vật liệu sinh học</h3>
-                            <p class="text-gray-600 font-light mb-6 line-clamp-3 leading-relaxed">Công nghệ in 3D đang mở ra chân trời mới cho vật liệu xanh. Nó cho phép các nhà thiết kế thời trang tạo ra những kết cấu phức tạp mà trước đây không thể làm được bằng phương pháp thủ công.</p>
+                            <p class="text-gray-600 font-light mb-6 line-clamp-3 leading-relaxed">Công nghệ in 3D đang mở ra chân trời mới cho vật liệu xanh. Nó cho phép các nhà thiết kế tạo ra những kết cấu phức tạp.</p>
                             <span class="text-xs font-semibold border-b border-black pb-1 uppercase tracking-widest hover:text-oskin-orange hover:border-oskin-orange transition">Đọc tiếp</span>
                         </article>
-
-                        <!-- Tin tức 3 -->
-<article class="group cursor-pointer">
-    <div class="overflow-hidden mb-6 rounded">
-        <!-- Đã thay bằng link ảnh cam mới, độ phân giải cao và ổn định hơn -->
-        <img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?q=80&w=800&auto=format&fit=crop" alt="Orange peel" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-    </div>
-    <p class="text-xs font-semibold text-oskin-orange uppercase tracking-widest mb-3">Câu Chuyện | 10/06/2026</p>
-    <h3 class="text-2xl font-serif font-semibold mb-3 group-hover:text-oskin-green transition leading-snug">Từ vỏ cam đến chiếc túi xách</h3>
-    <p class="text-gray-600 font-light mb-6 line-clamp-3 leading-relaxed">Vỏ cam chứa rất nhiều polyme sinh học như cellulose. Đội ngũ O-Skin đã ứng dụng công nghệ trích ly để biến những phần vỏ bị bỏ đi này thành chất liệu giả da cực kỳ mềm mịn, dai và bền.</p>
-    <span class="text-xs font-semibold border-b border-black pb-1 uppercase tracking-widest hover:text-oskin-orange hover:border-oskin-orange transition">Đọc tiếp</span>
-</article>
+                        <article class="group cursor-pointer">
+                            <div class="overflow-hidden mb-6 rounded">
+                                <img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?q=80&w=800&auto=format&fit=crop" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
+                            </div>
+                            <p class="text-xs font-semibold text-oskin-orange uppercase tracking-widest mb-3">Câu Chuyện | 10/06/2026</p>
+                            <h3 class="text-2xl font-serif font-semibold mb-3 group-hover:text-oskin-green transition leading-snug">Từ vỏ cam đến chiếc túi xách</h3>
+                            <p class="text-gray-600 font-light mb-6 line-clamp-3 leading-relaxed">Vỏ cam chứa rất nhiều polyme sinh học. Đội ngũ O-Skin đã ứng dụng công nghệ trích ly để biến những phần vỏ bị bỏ đi này thành chất liệu giả da siêu mềm mịn.</p>
+                            <span class="text-xs font-semibold border-b border-black pb-1 uppercase tracking-widest hover:text-oskin-orange hover:border-oskin-orange transition">Đọc tiếp</span>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -334,61 +360,18 @@
                         <h2 class="text-sm font-semibold uppercase tracking-widest text-oskin-orange mb-4">Support</h2>
                         <h3 class="text-4xl md:text-5xl font-serif font-semibold text-oskin-dark">Câu Hỏi Thường Gặp</h3>
                     </div>
-                    
                     <div class="space-y-4">
-                        <!-- FAQ 1 -->
                         <div class="faq-item bg-white border border-gray-200 rounded p-6 cursor-pointer" onclick="this.classList.toggle('active')">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-semibold text-lg text-oskin-dark">Chất liệu da sinh học có đủ bền để sử dụng hằng ngày không?</h4>
-                                <span class="faq-icon transition-transform text-2xl text-oskin-orange font-light">+</span>
-                            </div>
-                            <div class="faq-answer text-gray-600 text-base font-light leading-loose mt-2">
-                                <p class="pt-4">Có. Công thức vật liệu của chúng tôi được kết hợp từ vỏ cam và các sợi gia cường tự nhiên, đạt độ bền vật lý cực tốt. Sản phẩm chống nứt gãy, chịu được tải trọng từ 3-6kg (tùy mẫu), hoàn toàn phù hợp để bạn mang đi làm hay dạo phố mỗi ngày.</p>
-                            </div>
+                            <div class="flex justify-between items-center"><h4 class="font-semibold text-lg">Chất liệu da sinh học có đủ bền để sử dụng hằng ngày không?</h4><span class="faq-icon text-2xl text-oskin-orange">+</span></div>
+                            <div class="faq-answer text-gray-600 font-light leading-loose mt-2"><p class="pt-4">Có. Sản phẩm chống nứt gãy, chịu được tải trọng từ 3-6kg, hoàn toàn phù hợp đi làm hay dạo phố mỗi ngày.</p></div>
                         </div>
-
-                        <!-- FAQ 2 -->
                         <div class="faq-item bg-white border border-gray-200 rounded p-6 cursor-pointer" onclick="this.classList.toggle('active')">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-semibold text-lg text-oskin-dark">Sản phẩm có dùng nhựa tổng hợp (PU/PVC) không?</h4>
-                                <span class="faq-icon transition-transform text-2xl text-oskin-orange font-light">+</span>
-                            </div>
-                            <div class="faq-answer text-gray-600 text-base font-light leading-loose mt-2">
-                                <p class="pt-4">Tuyệt đối không. Bề mặt da của O-Skin thuần chay 100% từ nguyên liệu thực vật. Quá trình xử lý không dùng kim loại nặng, không dùng hóa chất gốc dầu mỏ nên túi sẽ không có mùi nhựa hắc, thay vào đó là mùi thơm tự nhiên rất dễ chịu.</p>
-                            </div>
+                            <div class="flex justify-between items-center"><h4 class="font-semibold text-lg">Sản phẩm có dùng nhựa tổng hợp (PU/PVC) không?</h4><span class="faq-icon text-2xl text-oskin-orange">+</span></div>
+                            <div class="faq-answer text-gray-600 font-light leading-loose mt-2"><p class="pt-4">Tuyệt đối không. Bề mặt da thuần chay 100% từ thực vật, không mùi nhựa, chỉ có mùi thơm tự nhiên.</p></div>
                         </div>
-
-                        <!-- FAQ 3 -->
                         <div class="faq-item bg-white border border-gray-200 rounded p-6 cursor-pointer" onclick="this.classList.toggle('active')">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-semibold text-lg text-oskin-dark">Giá sản phẩm có đắt không?</h4>
-                                <span class="faq-icon transition-transform text-2xl text-oskin-orange font-light">+</span>
-                            </div>
-                            <div class="faq-answer text-gray-600 text-base font-light leading-loose mt-2">
-                                <p class="pt-4">O-Skin định vị ở phân khúc trung cấp (từ 700.000đ đến 2.500.000đ). Dù chi phí nghiên cứu vật liệu sinh học đắt đỏ hơn da nhân tạo, nhưng chúng tôi giữ mức giá này để mọi người đều có thể dễ dàng tiếp cận và sử dụng thời trang xanh.</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ 4 -->
-                        <div class="faq-item bg-white border border-gray-200 rounded p-6 cursor-pointer" onclick="this.classList.toggle('active')">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-semibold text-lg text-oskin-dark">O-Skin có khả năng chống thấm nước không?</h4>
-                                <span class="faq-icon transition-transform text-2xl text-oskin-orange font-light">+</span>
-                            </div>
-                            <div class="faq-answer text-gray-600 text-base font-light leading-loose mt-2">
-                                <p class="pt-4">Vật liệu được phủ lớp bảo vệ bằng dầu dừa tự nhiên, giúp kháng nước nhẹ (đi mưa lất phất). Nhưng vì bản chất là chất liệu hữu cơ, bạn nên dùng khăn khô lau sạch ngay khi túi bị ướt để giữ bề mặt luôn đẹp nhất.</p>
-                            </div>
-                        </div>
-
-                        <!-- FAQ 5 -->
-                        <div class="faq-item bg-white border border-gray-200 rounded p-6 cursor-pointer" onclick="this.classList.toggle('active')">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-semibold text-lg text-oskin-dark">O-Skin có nhận thiết kế sỉ cho doanh nghiệp (B2B) không?</h4>
-                                <span class="faq-icon transition-transform text-2xl text-oskin-orange font-light">+</span>
-                            </div>
-                            <div class="faq-answer text-gray-600 text-base font-light leading-loose mt-2">
-                                <p class="pt-4">Có. Nếu doanh nghiệp, khách sạn hoặc resort của bạn đang tìm kiếm các giải pháp quà tặng ESG thân thiện với môi trường, vui lòng nhắn tin trực tiếp cho O-Skin để được tư vấn thiết kế và báo giá chi tiết.</p>
-                            </div>
+                            <div class="flex justify-between items-center"><h4 class="font-semibold text-lg">Giá sản phẩm có đắt không?</h4><span class="faq-icon text-2xl text-oskin-orange">+</span></div>
+                            <div class="faq-answer text-gray-600 font-light leading-loose mt-2"><p class="pt-4">O-Skin định vị ở phân khúc trung cấp (700.000đ - 2.500.000đ), dễ tiếp cận hơn nhiều so với thương hiệu xa xỉ.</p></div>
                         </div>
                     </div>
                 </div>
@@ -397,46 +380,29 @@
 
         <!-- =================== JOIN OUR TEAM =================== -->
         <section id="join-team" class="page-view">
-            <!-- Header Banner -->
             <div class="relative h-[40vh] flex items-center justify-center bg-oskin-dark overflow-hidden">
                 <h1 class="relative z-10 text-white text-5xl md:text-6xl font-serif font-bold">Careers</h1>
             </div>
-
             <div class="py-24 bg-white">
                 <div class="max-w-screen-xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    <!-- Intro -->
                     <div>
                         <h2 class="text-sm font-semibold uppercase tracking-widest text-oskin-orange mb-4">Gia nhập đội ngũ</h2>
                         <h3 class="text-4xl font-serif font-semibold mb-6 text-oskin-dark leading-tight">Cùng kiến tạo thời trang tuần hoàn</h3>
-                        <p class="text-gray-700 font-light text-lg mb-8 leading-loose">
-                            Tại O-Skin, chúng tôi làm việc không chỉ để tạo ra một chiếc túi đẹp, mà còn để thay đổi tư duy tiêu dùng. Môi trường khởi nghiệp tại O-Skin rất linh hoạt và đòi hỏi sự tự chủ cao. Chúng tôi đang tìm kiếm những người cộng sự cho các vị trí:
-                        </p>
+                        <p class="text-gray-700 font-light text-lg mb-8 leading-loose">Tại O-Skin, chúng tôi làm việc không chỉ để tạo ra một chiếc túi đẹp, mà còn để thay đổi tư duy tiêu dùng. Các vị trí đang mở:</p>
                         <ul class="space-y-4 mb-8 text-oskin-dark font-medium">
                             <li class="flex items-center"><span class="w-1.5 h-1.5 bg-oskin-orange rounded-full mr-4"></span>Chuyên viên R&D Vật liệu sinh học</li>
                             <li class="flex items-center"><span class="w-1.5 h-1.5 bg-oskin-orange rounded-full mr-4"></span>Chuyên viên Kiểm soát chất lượng (QC)</li>
                             <li class="flex items-center"><span class="w-1.5 h-1.5 bg-oskin-orange rounded-full mr-4"></span>Nhà thiết kế phụ kiện thời trang</li>
                             <li class="flex items-center"><span class="w-1.5 h-1.5 bg-oskin-orange rounded-full mr-4"></span>Nhân viên Marketing & Truyền thông</li>
                         </ul>
-                        <p class="text-gray-500 text-sm italic font-light border-l-2 border-oskin-orange pl-4 leading-relaxed">
-                            * Không yêu cầu số năm kinh nghiệm, chúng tôi đánh giá cao năng lực thực thi và tư duy phù hợp với môi trường khởi nghiệp.
-                        </p>
                     </div>
-
-                    <!-- Application Form -->
                     <div class="bg-gray-50 p-8 md:p-12 border border-gray-200 rounded">
                         <h4 class="text-2xl font-serif font-semibold mb-8">Nộp hồ sơ ứng tuyển</h4>
                         <form onsubmit="submitJobApplication(event)" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Họ và Tên *</label>
-                                    <input type="text" required class="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-oskin-orange transition font-light" placeholder="Tên của bạn">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Email *</label>
-                                    <input type="email" required class="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-oskin-orange transition font-light" placeholder="Email liên hệ">
-                                </div>
+                                <div><label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Họ và Tên *</label><input type="text" required class="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-oskin-orange transition font-light"></div>
+                                <div><label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Email *</label><input type="email" required class="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-oskin-orange transition font-light"></div>
                             </div>
-                            
                             <div>
                                 <label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Vị trí ứng tuyển *</label>
                                 <select required class="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-oskin-orange transition text-gray-600 font-light">
@@ -445,25 +411,9 @@
                                     <option value="qc">Kỹ sư QC</option>
                                     <option value="design">Thiết kế Thời trang</option>
                                     <option value="marketing">Nhân viên Marketing</option>
-                                    <option value="sales">Nhân viên Kinh doanh B2B</option>
                                 </select>
                             </div>
-
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Link Portfolio (Nếu có)</label>
-                                <input type="url" class="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-oskin-orange transition font-light" placeholder="Behance, LinkedIn, Drive...">
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Đính kèm CV (PDF, DOCX) *</label>
-                                <input type="file" required accept=".pdf,.doc,.docx" class="w-full text-sm text-gray-600 font-light mt-2">
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Chia sẻ ngắn về bạn</label>
-                                <textarea rows="3" required class="w-full border border-gray-300 bg-transparent p-3 focus:outline-none focus:border-oskin-orange transition resize-none font-light" placeholder="Tại sao bạn cảm thấy phù hợp với O-Skin?"></textarea>
-                            </div>
-
+                            <div><label class="block text-xs font-semibold text-gray-700 uppercase tracking-widest mb-2">Đính kèm CV (PDF, DOCX) *</label><input type="file" required accept=".pdf,.doc,.docx" class="w-full text-sm text-gray-600 font-light mt-2"></div>
                             <button type="submit" class="w-full bg-oskin-dark text-white font-semibold uppercase tracking-widest py-4 hover:bg-oskin-orange transition duration-300 text-sm mt-4">Gửi Hồ Sơ</button>
                         </form>
                     </div>
@@ -477,27 +427,16 @@
                 <div class="max-w-screen-xl mx-auto px-6 md:px-12 text-center">
                     <h2 class="text-sm font-semibold uppercase tracking-widest text-oskin-orange mb-4">Contact Us</h2>
                     <h3 class="text-4xl md:text-5xl font-serif font-semibold mb-8 text-oskin-dark">Kết nối với O-Skin</h3>
-                    <p class="text-gray-600 font-light text-lg max-w-2xl mx-auto mb-16 leading-loose">Nếu bạn là đối tác B2B cần tìm giải pháp vật liệu, quỹ đầu tư, hoặc đơn giản là muốn trải nghiệm thực tế chất da sinh học từ vỏ cam của chúng tôi, đừng ngần ngại liên hệ.</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
                         <div class="bg-oskin-light p-10 border border-gray-100 rounded">
-                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                                <svg class="w-5 h-5 text-oskin-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            </div>
                             <h4 class="font-semibold uppercase tracking-widest text-sm mb-3">Trụ Sở</h4>
                             <p class="text-gray-600 font-light text-sm leading-relaxed">Đường Tân Mỹ, Phường Tân Thuận<br>TP. Hồ Chí Minh, Việt Nam</p>
                         </div>
                         <div class="bg-oskin-light p-10 border border-gray-100 rounded">
-                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                                <svg class="w-5 h-5 text-oskin-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            </div>
                             <h4 class="font-semibold uppercase tracking-widest text-sm mb-3">Email</h4>
                             <p class="text-gray-600 font-light text-sm leading-relaxed">Cơ bản: contact@oskin.vn<br>Báo chí: press@oskin.vn</p>
                         </div>
                         <div class="bg-oskin-light p-10 border border-gray-100 rounded">
-                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                                <svg class="w-5 h-5 text-oskin-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                            </div>
                             <h4 class="font-semibold uppercase tracking-widest text-sm mb-3">Hotline</h4>
                             <p class="text-gray-600 font-light text-sm leading-relaxed">+84 378 507 388<br>(Thứ 2 - Thứ 6: 9AM - 6PM)</p>
                         </div>
@@ -513,96 +452,214 @@
         <div class="max-w-screen-2xl mx-auto px-6 md:px-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                 <div class="md:col-span-2">
-                    <h4 class="font-serif text-3xl font-bold tracking-widest uppercase mb-6 hover:text-oskin-orange transition" onclick="navigateTo('home')" style="cursor: pointer;">O-SKIN CO., LTD</h4>
-                    <p class="text-gray-400 font-light max-w-md leading-loose text-sm">
-                        Doanh nghiệp nghiên cứu và ứng dụng vật liệu sinh học từ phụ phẩm nông nghiệp, thúc đẩy tiêu dùng bền vững và kinh tế tuần hoàn tại Việt Nam.
-                    </p>
+                    <h4 class="font-serif text-3xl font-bold tracking-widest uppercase mb-6 hover:text-oskin-orange transition cursor-pointer" onclick="navigateTo('home')">O-SKIN CO., LTD</h4>
+                    <p class="text-gray-400 font-light max-w-md leading-loose text-sm">Thời trang thuần chay sinh học từ phụ phẩm nông nghiệp tại Việt Nam.</p>
                 </div>
                 <div>
                     <h5 class="text-xs font-semibold uppercase tracking-widest mb-6 text-white">Menu</h5>
                     <ul class="text-gray-400 font-light text-sm space-y-4">
                         <li><button onclick="navigateTo('about')" class="hover:text-oskin-orange transition">Về chúng tôi</button></li>
                         <li><button onclick="navigateTo('products')" class="hover:text-oskin-orange transition">Cửa hàng</button></li>
-                        <li><button onclick="navigateTo('faq')" class="hover:text-oskin-orange transition">Hỗ trợ & FAQ</button></li>
                     </ul>
                 </div>
                 <div>
                     <h5 class="text-xs font-semibold uppercase tracking-widest mb-6 text-white">Kết Nối</h5>
                     <ul class="text-gray-400 font-light text-sm space-y-4">
-                        <li><button onclick="alert('Trang Facebook đang được xây dựng!')" class="hover:text-oskin-orange transition">Facebook</button></li>
-                        <li><button onclick="alert('Trang Instagram đang được xây dựng!')" class="hover:text-oskin-orange transition">Instagram</button></li>
-                        <li><button onclick="alert('Gian hàng TikTok Shop đang được xây dựng!')" class="hover:text-oskin-orange transition">TikTok Shop</button></li>
+                        <li><button class="hover:text-oskin-orange transition">Instagram</button></li>
+                        <li><button class="hover:text-oskin-orange transition">TikTok Shop</button></li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 uppercase tracking-widest">
+            <div class="border-t border-gray-800 pt-8 text-xs text-gray-500 uppercase tracking-widest">
                 <p>&copy; 2026 O-Skin. All rights reserved.</p>
-                <div class="space-x-6 mt-4 md:mt-0 font-light">
-                    <button class="hover:text-white transition">Privacy Policy</button>
-                    <button class="hover:text-white transition">Terms of Service</button>
-                </div>
             </div>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT GIAO DIỆN -->
+    <!-- JAVASCRIPT GIAO DIỆN & E-COMMERCE -->
     <script>
-        // Router ảo: chuyển trang không cần tải lại
-        function navigateTo(pageId) {
-            // 1. Ẩn tất cả các section có class 'page-view'
-            const pages = document.querySelectorAll('.page-view');
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // 2. Hiển thị trang có id tương ứng
-            const targetPage = document.getElementById(pageId);
-            if(targetPage) {
-                targetPage.classList.add('active');
+        // DATA SẢN PHẨM 
+        const dbProducts = [
+            {
+                id: 'p1', category: 'Mini', color: 'Trắng', colorCode: '#f4f1ea', name: 'O-Skin Mini Ivory', price: 699000,
+                desc: 'Thiết kế dáng túi cứng cáp nhưng bề mặt mềm mịn, phù hợp cho mọi hoàn cảnh từ công sở đến dạo phố. Chịu tải tối ưu 2-3kg.',
+                img1: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=800&auto=format&fit=crop',
+                img2: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800&auto=format&fit=crop',
+                gallery: [
+                    'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=800',
+                    'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800',
+                    'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800',
+                    'https://images.unsplash.com/photo-1628149462151-57270b2bc61a?q=80&w=800'
+                ]
+            },
+            {
+                id: 'p2', category: 'Mini', color: 'Đen', colorCode: '#222222', name: 'O-Skin Mini Noir', price: 699000,
+                desc: 'Phiên bản màu đen cổ điển, không bao giờ lỗi mốt. Đường may nổi tinh tế, chống xước cực tốt.',
+                img1: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop',
+                img2: 'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=800&auto=format&fit=crop',
+                gallery: [
+                    'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800',
+                    'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=800'
+                ]
+            },
+            {
+                id: 'p3', category: 'Tote', color: 'Nâu', colorCode: '#8b5a2b', name: 'O-Skin Tote Caramel', price: 2500000,
+                desc: 'Sức chứa khổng lồ lên tới 6kg, đựng vừa laptop 14 inch. Quai xách kép gia cố chịu lực.',
+                img1: 'https://images.unsplash.com/photo-1628149462151-57270b2bc61a?q=80&w=800&auto=format&fit=crop',
+                img2: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800&auto=format&fit=crop',
+                gallery: [
+                    'https://images.unsplash.com/photo-1628149462151-57270b2bc61a?q=80&w=800',
+                    'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800'
+                ]
+            },
+            {
+                id: 'p4', category: 'Cross', color: 'Xanh', colorCode: '#4a5d23', name: 'O-Skin Cross Olive', price: 1500000,
+                desc: 'Năng động với dây đeo bản to êm ái. Tông màu Olive lấy cảm hứng từ thiên nhiên.',
+                img1: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800&auto=format&fit=crop',
+                img2: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800&auto=format&fit=crop',
+                gallery: [
+                    'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800',
+                    'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800'
+                ]
             }
+        ];
+
+        let currentCategory = 'All'; let currentColor = 'All'; let cart = [];
+        const formatMoney = (amount) => new Intl.NumberFormat('vi-VN').format(amount) + ' VNĐ';
+
+        // Render Lưới Sản Phẩm
+        function renderGrid() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            const filtered = dbProducts.filter(p => (currentCategory === 'All' || p.category === currentCategory) && (currentColor === 'All' || p.color === currentColor));
             
-            // 3. Cuộn lên đầu trang
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            if(filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center py-10 text-gray-400">Không tìm thấy sản phẩm phù hợp.</p>`; return;
+            }
+
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="group cursor-pointer" onclick="openProductDetail('${p.id}')">
+                        <div class="bg-gray-50 h-[450px] mb-4 relative overflow-hidden">
+                            <img src="${p.img1}" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out group-hover:opacity-0">
+                            <img src="${p.img2}" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100 scale-105 group-hover:scale-100">
+                        </div>
+                        <h4 class="font-serif text-xl font-bold mb-1 group-hover:text-oskin-orange transition">${p.name}</h4>
+                        <p class="text-gray-500 font-light text-sm mb-2">${p.color}</p>
+                        <p class="font-bold">${formatMoney(p.price)}</p>
+                    </div>`;
             });
         }
 
-        // Đổi màu thanh Header khi kéo chuột xuống
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-cat').forEach(btn => {
+                btn.classList.remove('border-b-2', 'border-oskin-dark', 'font-bold', 'text-oskin-dark');
+                btn.classList.add('font-light', 'text-gray-400');
+            });
+            const activeBtn = document.getElementById(`cat-${cat}`);
+            activeBtn.classList.remove('font-light', 'text-gray-400');
+            activeBtn.classList.add('border-b-2', 'border-oskin-dark', 'font-bold', 'text-oskin-dark');
+            renderGrid();
+        }
+
+        function filterColor(color) { currentColor = color; renderGrid(); }
+
+        // Chi tiết sản phẩm
+        function openProductDetail(id) {
+            const p = dbProducts.find(x => x.id === id);
+            if(!p) return;
+            document.getElementById('pd-breadcrumb-name').innerText = p.name;
+            document.getElementById('pd-category').innerText = p.category;
+            document.getElementById('pd-name').innerText = p.name;
+            document.getElementById('pd-price').innerText = formatMoney(p.price);
+            document.getElementById('pd-color-name').innerText = p.color;
+            document.getElementById('pd-color-circle').style.backgroundColor = p.colorCode;
+            document.getElementById('pd-desc').innerText = p.desc;
+            document.getElementById('pd-main-img').src = p.img1;
+
+            const thumbContainer = document.getElementById('pd-thumbnails');
+            thumbContainer.innerHTML = '';
+            p.gallery.forEach((url) => {
+                thumbContainer.innerHTML += `<button onclick="document.getElementById('pd-main-img').src='${url}'" class="w-16 h-20 md:w-20 md:h-24 flex-shrink-0 border hover:border-oskin-orange transition"><img src="${url}" class="w-full h-full object-cover"></button>`;
+            });
+
+            document.getElementById('pd-add-btn').onclick = () => addToCart(p.id);
+            navigateTo('product-detail');
+        }
+
+        // Giỏ hàng
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (drawer.classList.contains('cart-open')) {
+                drawer.classList.remove('cart-open'); overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            } else {
+                overlay.classList.remove('hidden'); setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                drawer.classList.add('cart-open');
+            }
+        }
+
+        function addToCart(id) {
+            const p = dbProducts.find(x => x.id === id);
+            const existItem = cart.find(x => x.id === id);
+            if(existItem) existItem.qty += 1; else cart.push({ ...p, qty: 1 });
+            updateCartUI(); toggleCart();
+        }
+
+        function removeCartItem(id) {
+            cart = cart.filter(x => x.id !== id); updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            let totalQty = 0; let totalPrice = 0;
+            container.innerHTML = '';
+            if(cart.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 font-light text-sm text-center mt-10">Giỏ hàng của bạn đang trống.</p>`;
+            } else {
+                cart.forEach(item => {
+                    totalQty += item.qty; totalPrice += (item.price * item.qty);
+                    container.innerHTML += `
+                        <div class="flex gap-4 items-center">
+                            <img src="${item.img1}" class="w-20 h-24 object-cover bg-gray-50">
+                            <div class="flex-grow">
+                                <h5 class="font-serif font-bold">${item.name}</h5>
+                                <p class="text-xs text-gray-500 mb-2">Màu: ${item.color} | SL: ${item.qty}</p>
+                                <p class="font-semibold text-sm">${formatMoney(item.price * item.qty)}</p>
+                            </div>
+                            <button onclick="removeCartItem('${item.id}')" class="text-gray-400 hover:text-red-500 text-sm font-bold transition">Xóa</button>
+                        </div>`;
+                });
+            }
+            document.getElementById('cart-count').innerText = totalQty;
+            document.getElementById('cart-total').innerText = formatMoney(totalPrice);
+        }
+
+        // Router & Misc
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if(pageId === 'products') renderGrid();
+        }
+
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 30) {
-                navbar.classList.add('scrolled');
-                navbar.classList.remove('text-white');
+                navbar.classList.add('scrolled', 'py-3'); navbar.classList.remove('text-white', 'py-5');
             } else {
-                navbar.classList.remove('scrolled');
-                navbar.classList.add('text-white');
+                navbar.classList.remove('scrolled', 'py-3'); navbar.classList.add('text-white', 'py-5');
             }
         });
 
-        // Xử lý nộp form tuyển dụng ảo
         function submitJobApplication(event) {
-            event.preventDefault(); // Ngăn trình duyệt load lại trang
-            alert("Cảm ơn bạn! Hồ sơ đã được gửi. Đội ngũ HR của O-Skin sẽ xem xét và phản hồi qua Email trong thời gian sớm nhất.");
-            event.target.reset(); // Xóa trắng dữ liệu sau khi nộp
+            event.preventDefault(); alert("Cảm ơn bạn! Hồ sơ đã được gửi. Đội ngũ HR của O-Skin sẽ xem xét và phản hồi qua Email trong thời gian sớm nhất."); event.target.reset();
         }
-    </script>
 
-<script>
-const products=[
-['Mini','Ivory White','699.000 VNĐ','Product/mini-ivory.png'],['Mini','Taupe Beige','699.000 VNĐ','Product/mini-beige.png'],
-['Mini','Sage Green','699.000 VNĐ','Product/mini-sage.png'],['Mini','Dusty Rose','699.000 VNĐ','Product/mini-rose.png'],
-['Mini','Classic Black','749.000 VNĐ','Product/mini-black.png'],['Mini','Caramel Brown','749.000 VNĐ','Product/mini-brown.png'],
-['Tote','Ivory White','1.299.000 VNĐ','Product/tote-ivory.png'],['Tote','Taupe Beige','1.299.000 VNĐ','Product/tote-beige.png'],
-['Tote','Sage Green','1.299.000 VNĐ','Product/tote-sage.png'],['Tote','Dusty Rose','1.299.000 VNĐ','Product/tote-rose.png'],
-['Tote','Classic Black','1.399.000 VNĐ','Product/tote-black.png'],['Tote','Caramel Brown','1.399.000 VNĐ','Product/tote-brown.png']
-];
-function renderProducts(arr){let g=document.getElementById('productGrid'); if(!g)return;
-g.innerHTML=arr.map((p,i)=>`<div class="group"><img src="${p[3]}" class="w-full h-96 object-cover"><h3 class="font-serif text-2xl mt-3">O-Skin ${p[0]}</h3><p>${p[1]}</p><div class="flex justify-between"><span>${p[2]}</span><button onclick="showProduct(${i})">View</button></div></div>`).join('')}
-function filterCollection(t){renderProducts(t==='all'?products:products.filter(x=>x[0]===t))}
-function showProduct(i){let p=products[i];document.getElementById('productModal').classList.remove('hidden');document.getElementById('modalContent').innerHTML=`<img src="${p[3]}" class="w-full max-h-[500px] object-contain"><h2 class="text-3xl mt-4">O-Skin ${p[0]}</h2><p>${p[1]}</p><p>${p[2]}</p>`}
-function closeModal(){document.getElementById('productModal').classList.add('hidden')}
-document.addEventListener('DOMContentLoaded',()=>renderProducts(products));
-</script>
+        // Init
+        renderGrid(); updateCartUI();
+    </script>
 </body>
 </html>
